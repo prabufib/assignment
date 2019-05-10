@@ -1,0 +1,65 @@
+<section class="body">
+  <header class="header">
+    <div class="header-left">      
+      <div id="userbox" class="userbox">
+        <span class="name"><h3>Assignment</h3></span>
+      </div>
+    </div> 
+    <div class="header-right">      
+      <div id="userbox" class="userbox">
+        <span class="name"><%= link_to("Login", login_users_path) %></span>
+      </div>
+    </div>   
+  </header>
+  <div class="inner-wrapper" style="height: 1000px">
+    <aside id="sidebar-left" class="sidebar-left">
+      <div class="nano">
+        <div class="nano-content">
+          <div class="sidebar-widget widget-tasks">
+            <div class="widget-header">
+              <h6>Categories</h6>
+              <div class="widget-content">
+                <ul class="list-unstyled m-none">
+                  <% Category.all.each do |cat| %>
+                    <li>
+                      <%= link_to(cat.name, category_path(cat.id)) %>
+                    </li>
+                  <% end %>  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <section role="main" class="content-body">
+      <header class="page-header">
+        <h2>Login</h2>
+      </header>
+      <div class="row">
+        <div class="col-md-12">
+          <section class="panel">
+            <%= form_tag user_session_path  do%>
+              <table>
+                <tr>
+                  <td><span>Email:</span></td>
+                  <td><%= text_field_tag "email", "", required: true%></td>
+                </tr>
+                <tr>
+                  <td><span>Password:</span></td>
+                  <td><%= text_field_tag "email", "", required: true%></td>
+                </tr>
+                <tr>
+                  <td>
+                  <%= submit_tag "Login" %>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+            </section>
+          </div>
+      </div>
+    </section>
+
+      </div>
+</section>

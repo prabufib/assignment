@@ -1,0 +1,81 @@
+<section class="body">
+  <header class="header">
+    <div class="header-left">      
+      <div id="userbox" class="userbox">
+        <span class="name"><h3>Assignment</h3></span>
+      </div>
+    </div> 
+    <div class="header-right">      
+      <div id="userbox" class="userbox">
+        <span class="name">
+          <% if current_user.present? %>
+            <%= link_to 'Logout', destroy_user_session_path, :method => 'delete' %>
+          <% else %>
+            <%= link_to("Login", user_session_path) %> ||
+            <%= link_to("Register", new_user_registration_path) %>
+          <% end %>    
+        </span>
+      </div>
+    </div>   
+  </header>
+  <div class="inner-wrapper" style="height: 1000px">
+    <aside id="sidebar-left" class="sidebar-left">
+      <div class="nano">
+        <div class="nano-content">
+          <div class="sidebar-widget widget-tasks">
+            <div class="widget-header">
+              <h6>Categories</h6>
+              <div class="widget-content">
+                <ul class="list-unstyled m-none">
+                  <% Category.all.each do |cat| %>
+                    <li>
+                      <%= link_to(cat.name, "#") %>
+                    </li>
+                  <% end %>  
+                </ul>
+                <ul><%= link_to("Topics Followed", get_follows_user_path(current_user)) %></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <section role="main" class="content-body">
+      <header class="page-header">
+        <h2><%= link_to("Dashboard","/") %></h2>
+      </header>
+      <div class="row">
+        <% @questionnaires.each do |questionnaire| %>
+          <div class="col-md-12">
+            <section class="panel">
+              <header class="panel-heading">
+                <div class="panel-actions">
+                  <a href="javascript::void()" onclick="follow_questionnaire('<%= questionnaire.id %>', '<%= current_user.id if current_user%>')">Follow</a>
+                </div>
+                <h2 class="panel-title"><%= questionnaire.name %></h2>
+                  <p class="panel-subtitle"><%= questionnaire.description %></p>
+              </header>
+            </section>
+          </div
+        <% end %>
+      </div>
+    </section>
+  </div>
+</section>
+
+<script type="text/javascript">
+  function follow_questionnaire(questionnaire_id, current_user_id){
+    if (current_user_id != ""){
+      url = "questionnaire/" + questionnaire_id + "/user_id/" + current_user_id + "/follow" 
+      $.ajax({
+        url : url,
+        type: "GET",
+      }).then(function(response){
+        alert(response.message)
+      });
+    } else {
+      alert("Please login to Follow the Questionnaire.")
+    }
+
+  }
+</script>
